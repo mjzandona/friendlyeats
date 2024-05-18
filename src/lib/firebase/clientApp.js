@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./config";
@@ -10,3 +10,5 @@ export const firebaseApp =
 export const auth = getAuth(firebaseApp);
 export const db = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
+
+
