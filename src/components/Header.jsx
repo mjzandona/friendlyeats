@@ -54,30 +54,10 @@ function useUserSession(initialUser) {
   return user;
 }
 
-async function fetchWithFirebaseHeaders(request) {
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const installations = getInstallations(app);
-  const headers = new Headers(request.headers);
-  const [authIdToken, installationToken] = await Promise.all([
-    getAuthIdToken(auth),
-    getToken(installations),
-  ]);
-  headers.append("Firebase-Instance-ID-Token", installationToken);
-  if (authIdToken) headers.append("Authorization", `Bearer ${authIdToken}`);
-  const newRequest = new Request(request, { headers });
-  return await fetch(newRequest);
-}
-
-async function getAuthIdToken(auth) {
-  await auth.authStateReady();
-  if (!auth.currentUser) return;
-  return await getIdToken(auth.currentUser);
-}
-
 export default function Header({ initialUser }) {
   const user = useUserSession(initialUser);
 
+  
   const handleSignOut = (event) => {
     event.preventDefault();
     signOut();
